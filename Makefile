@@ -1,7 +1,7 @@
 # Using the example from https://coq.inria.fr/refman/practical-tools/utilities.html#reusing-extending-the-generated-makefile
 
 # KNOWNTARGETS will not be passed along to CoqMakefile
-KNOWNTARGETS := CoqMakefile all sym_exa
+KNOWNTARGETS := CoqMakefile all
 
 # KNOWNFILES will not get implicit targets from the final rule, and so
 # depending on them won't invoke the submake
@@ -25,7 +25,7 @@ invoke-coqmakefile: CoqMakefile
 ##		      Your targets here			 ##
 ###########################################################
 
-QWIRE := src/com/QWIRE
+QWIRE := src/com/QuantumLib
 reQWIRE := src/com
 
 QIMP := src/sym
