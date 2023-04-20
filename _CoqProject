@@ -1,0 +1,16 @@
+-R . Top
+#-arg -profile-ltac
+
+src/com/QWIRE/Prelim.v
+src/com/QWIRE/RealAux.v
+src/com/QWIRE/Complex.v
+src/com/QWIRE/Matrix.v
+
+src/com/reComplex.v
+src/com/reMatrix.v
+src/com/Quantum.v
+
+src/sym/Nat_notWF.v
+src/sym/Nat_Dirac.v
+src/sym/Denotations.v
+src/sym/Preparation.v
