@@ -30,8 +30,9 @@ Definitions and related theorems of language semantics
 
 Examples of verifying correctness properties of quantum algorithms.
 
-- example/sym/Tele.v : Quantum teleportation.
-- example/sym/Gro.v : Grover’s search algorithms.
-- example/sym/Deu.v : Deutsch's algorithm.
-- example/sym/Sim.v : Simon's algorithm.
+- src/sym/Tele.v : Quantum teleportation.
+- src/sym/Gro.v : Grover’s search algorithms.
+- src/sym/Deu.v : Deutsch's algorithm.
+- src/sym/Sim.v : Simon's algorithm.
+
 
