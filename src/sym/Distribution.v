@@ -919,9 +919,84 @@ Qed.
 
 
 Lemma TE4 :forall b st, (dbeval b st) = true <-> beval b st.
-Admitted.
-Lemma TE3 : forall b st, ¬ (dbeval b st) = true <-> ~ beval b st.
-Admitted.
+Proof.
+intros. induction b.
++ simpl. unfold Sets.full.
+    split. intros. auto. intros. auto.
++ simpl. unfold Sets.empty.
+    split. intros. inversion H. intros. inversion H.
++ simpl. unfold Func.test_eq.
+    split; intros; apply Z.eqb_eq; auto.
++ simpl. unfold Func.test_le.
+    split; intros; apply Z.leb_le; auto.
++ simpl. unfold Sets.complement. unfold not.
+    split. - intros. apply negb_true_iff in H. apply IHb in H0. rewrite H in H0. inversion H0.
+               - intros. apply negb_true_iff.
+                  destruct (dbeval b st) eqn:E.
+                  * exfalso. apply H. apply IHb. auto.
+                  * auto.
++ simpl. unfold Sets.intersect.
+    split. - intros.
+                  split.
+                  * apply andb_true_iff in H. inversion H. apply IHb1. auto.
+                  * apply andb_true_iff in H. inversion H. apply IHb2. auto.
+               - intros. inversion H. apply andb_true_iff.
+                 split. * apply IHb1. auto. * apply IHb2. auto.
+Qed.
+
+Lemma TE3 : forall b st, (¬ (dbeval b st)) = true <-> ~ beval b st.
+Proof.
+intros. induction b.
++ simpl. unfold Sets.full.
+    split. intros. inversion H. intros. auto.
++ simpl. unfold Sets.empty.
+    split. intros. unfold not. auto. intros. auto.
++ simpl. unfold Func.test_eq.
+    split. 
+    - intros.
+       apply negb_true_iff in H.
+       apply Z.eqb_neq. auto.
+    - intros.
+      apply negb_true_iff. apply Z.eqb_neq. auto.
++ simpl. unfold Func.test_le.
+    split.
+    - intros.
+       apply negb_true_iff in H.
+       unfold not. intros.
+       apply Z.leb_nle in H.
+       unfold not in H. auto.
+    - intros.
+       apply negb_true_iff.
+       apply Z.leb_nle. auto.
++ simpl. unfold Sets.complement.
+    rewrite negb_involutive.
+    split.
+    - intros. rewrite H in IHb.
+       unfold not. intros. apply H0.
+       unfold not in IHb.
+       rewrite <-IHb in H0.
+       inversion H0.
+    - intros. unfold not in H.
+       destruct (dbeval b st) eqn:E. auto.
+       exfalso. apply H. rewrite <- IHb. auto.
++ simpl. unfold Sets.intersect.
+    split. - intros. apply or_not_and.
+                  apply negb_true_iff in H.
+                  apply andb_false_iff in H.
+                  destruct H.
+                  left. apply IHb1.
+                  apply negb_true_iff. auto.
+                  right. apply IHb2.
+                  apply negb_true_iff. auto.
+               - intros. apply negb_true_iff.
+                  apply andb_false_iff.
+                  apply not_and_or in H.
+                  destruct H.
+                  left. apply negb_true_iff.
+                  rewrite IHb1. auto.
+                  right. apply negb_true_iff.
+                  rewrite IHb2. auto.
+Qed.
 
 
 Lemma test2 : forall dst1 (dsts1 dsts2: list (list (list Z * State))) c1 c2 b,
